@@ -1,2 +1,2 @@
 # student_app
-A user interface to interact wihh students of e-pathshala! 
+A beautiful  user interface to interact wihh students of e-pathshala! 
