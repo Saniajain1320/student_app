@@ -35,6 +35,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   http: ^0.13.5
+  youtube_player_flutter: ^9.1.1
+
   
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,7 +62,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/videos/Tutorial.mp4 
+    - assets/videos/Tutorial.mp4
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

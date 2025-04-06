@@ -1,4 +1,10 @@
 # This is a generated file; do not edit or check into version control.
+flutter_inappwebview=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview-6.1.5/
+flutter_inappwebview_android=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview_android-1.1.3/
+flutter_inappwebview_ios=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview_ios-1.1.2/
+flutter_inappwebview_macos=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview_macos-1.1.2/
+flutter_inappwebview_web=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview_web-1.1.2/
+flutter_inappwebview_windows=/Users/admin/.pub-cache/hosted/pub.dev/flutter_inappwebview_windows-0.6.0/
 path_provider=/Users/admin/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
 path_provider_android=/Users/admin/.pub-cache/hosted/pub.dev/path_provider_android-2.2.16/
 path_provider_foundation=/Users/admin/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/

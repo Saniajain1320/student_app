@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_app/chatbot.dart';
+import 'package:student_app/videoPlayer.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:video_player/video_player.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 class GradientBackground extends StatelessWidget {
   final Widget child;
 
-  const GradientBackground({required this.child});
+  const GradientBackground({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -384,11 +384,11 @@ class _RecordingScreenState extends State<RecordingScreen> with SingleTickerProv
     {"subject": "Math", "chapter": "Algebra", "duration": "45 min", "progress": "0.8"},
     {"subject": "Physics", "chapter": "Kinematics", "duration": "30 min", "progress": "0.5"},
     {
-      "subject": "Tutorial",
-      "chapter": "How to Slap Your Brother",
-      "duration": "10 min",
+      "subject": "Maths",
+      "chapter": "Compound Interest",
+      "duration": "30 min",
       "progress": "1.0",
-      "videoPath": "assets/videos/Tutorial.mp4",
+      "videoPath": "/assets/videos/Tutorial.mp4",
     }
   ];
 
@@ -429,16 +429,22 @@ class _RecordingScreenState extends State<RecordingScreen> with SingleTickerProv
           ],
         ),
         leading: Icon(Icons.video_collection, color: Colors.blue),
-        onTap: () {
-          if (recording.containsKey("videoPath")) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => VideoPlayerScreen(videoPath: recording["videoPath"]!),
-              ),
-            );
-          }
-        },
+     onTap: () {
+  final videoPath = recording["videoPath"];
+  if (videoPath != null && videoPath.isNotEmpty) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => YouTubePlayerScreen(),
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('No video available for this recording.')),
+    );
+  }
+},
+
       ),
     );
   }
@@ -471,73 +477,81 @@ class _RecordingScreenState extends State<RecordingScreen> with SingleTickerProv
   }
 }
 
-class VideoPlayerScreen extends StatefulWidget {
-  final String videoPath;
+// class VideoPlayerScreen extends StatefulWidget {
+//   final String videoPath;
 
-  const VideoPlayerScreen({super.key, required this.videoPath});
+//   const VideoPlayerScreen({super.key, required this.videoPath});
 
-  @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
-}
+//   @override
+//   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+// }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late VideoPlayerController _controller;
-  bool _isError = false;
-  String _errorMessage = '';
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeVideoPlayer();
-  }
 
-  void _initializeVideoPlayer() {
-    print('Initializing video player with path: ${widget.videoPath}');
-    _controller = VideoPlayerController.asset(widget.videoPath)
-      ..initialize().then((_) {
-        setState(() {});
-      }).catchError((error) {
-        print('Error initializing video player: $error');
-        setState(() {
-          _isError = true;
-          _errorMessage = error.toString();
-        });
-      });
-  }
+// class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+//   late VideoPlayerController _controller;
+//   bool _isError = false;
+//   String _errorMessage = '';
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _initializeVideoPlayer();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Video Player")),
-      body: Center(
-        child: _isError
-            ? Text("Error loading video: $_errorMessage")
-            : _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : CircularProgressIndicator(),
-      ),
-      floatingActionButton: _isError
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  _controller.value.isPlaying ? _controller.pause() : _controller.play();
-                });
-              },
-              child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
-            ),
-    );
-  }
-}
+//   void _initializeVideoPlayer() {
+//     print("Initializing video player with path: /assets/videos/Tutorial.mp4");
+//       _controller = VideoPlayerController.asset('assets/videos/sample.mp4')
+//     ..initialize().then((_) {
+//       setState(() {});
+//     });
+//     https://www.youtube.com/watch?v=p8zWQbQN0Ew
+
+    // _controller = VideoPlayerController.asset("/assets/videos/Tutorial.mp4")
+    //   ..initialize().then((_) {
+    //     setState(() {});
+    //   }).catchError((error) {
+    //     print('Error initializing video player: $error');
+    //     setState(() {
+    //       _isError = true;
+    //       _errorMessage = error.toString();
+    //     });
+    //   });
+  //}
+
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Video Player")),
+//       body: Center(
+//         child: _isError
+//             ? Text("Error loading video: $_errorMessage")
+//             : _controller.value.isInitialized
+//                 ? AspectRatio(
+//                     aspectRatio: _controller.value.aspectRatio,
+//                     child: VideoPlayer(_controller),
+//                   )
+//                 : CircularProgressIndicator(),
+//       ),
+//       floatingActionButton: _isError
+//           ? null
+//           : FloatingActionButton(
+//               onPressed: () {
+//                 setState(() {
+//                   _controller.value.isPlaying ? _controller.pause() : _controller.play();
+//                 });
+//               },
+//               child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+//             ),
+//     );
+//   }
+// }
 class TestModel {
   final String subject;
   final String chapter;
@@ -578,6 +592,8 @@ class TestModel {
 
 // ✅ Main Page for Unit Tests
 class UnitTestPage extends StatefulWidget {
+  const UnitTestPage({super.key});
+
   @override
   _UnitTestPageState createState() => _UnitTestPageState();
   
@@ -815,14 +831,18 @@ final Map<String, bool> testCompletionStatus = {};
 class TestDetailPage extends StatelessWidget {
   final TestModel test;
 
-  TestDetailPage({required this.test});
+  const TestDetailPage({super.key, required this.test});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _answerController = TextEditingController();
+    TextEditingController answerController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: Text(test.chapter)),
+      appBar: AppBar(
+        title: Text(test.chapter),
+        backgroundColor: Colors.blue,
+      ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -834,7 +854,7 @@ class TestDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             TextField(
-              controller: _answerController,
+              controller: answerController,
               decoration: InputDecoration(
                 labelText: 'Your Answer',
                 border: OutlineInputBorder(),
@@ -843,7 +863,7 @@ class TestDetailPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                String userAnswer = _answerController.text.trim();
+                String userAnswer = answerController.text.trim();
                 String result = userAnswer == test.answer
                     ? 'Correct ✅'
                     : 'Incorrect ❌';
@@ -864,6 +884,8 @@ class TestDetailPage extends StatelessWidget {
 }
 
 class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

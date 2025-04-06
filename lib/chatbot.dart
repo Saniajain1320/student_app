@@ -8,6 +8,8 @@ import 'dart:io' show Platform;
 // }
 
 class ChatbotApp extends StatelessWidget {
+  const ChatbotApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,6 +23,11 @@ class ChatbotApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.white, // Set background to white
+        cardColor: Colors.white, // Set card color to white
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(color: Colors.blue), // Set text color to blue
+        ),
       ),
       themeMode: ThemeMode.system,
       home: ChatScreen(),
@@ -30,6 +37,8 @@ class ChatbotApp extends StatelessWidget {
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -46,11 +55,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('School Chatbot'),
-        centerTitle: true,
-        elevation: 0,
-      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -260,7 +264,7 @@ class ChatMessage extends StatelessWidget {
   final bool isUser;
   final AnimationController animationController;
 
-  ChatMessage({
+  const ChatMessage({super.key, 
     required this.text, 
     required this.isUser,
     required this.animationController,
@@ -312,9 +316,9 @@ class ChatMessage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 8.0, left: 8.0),
       child: CircleAvatar(
-        child: Text(isUser ? 'You' : 'Bot'),
         backgroundColor: isUser ? Colors.blue[300] : Colors.green[300],
         foregroundColor: Colors.white,
+        child: Text(isUser ? 'You' : 'Bot'),
       ),
     );
   }
